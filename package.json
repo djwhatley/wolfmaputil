@@ -1,0 +1,16 @@
+{
+  "name": "wolfmaputil",
+  "version": "1.0.0",
+  "description": "Utility for caching state legislature district information from the OpenStates API service",
+  "main": "index.js",
+  "scripts": {
+    "fetch": "node fetch.js",
+    "map": "node map.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "danieljwhatley@gmail.com",
+  "license": "ISC",
+  "dependencies": {
+    "shapefile": "^0.6.2"
+  }
+}
