@@ -11,6 +11,7 @@
   "author": "danieljwhatley@gmail.com",
   "license": "ISC",
   "dependencies": {
+    "fs-extra": "^3.0.0",
     "shapefile": "^0.6.2"
   }
 }
