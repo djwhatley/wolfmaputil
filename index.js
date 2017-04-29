@@ -1,39 +1,6 @@
-var fs = require('fs-extra');
-var https = require('https');
-
+var fs = require('fs');
 
 var settings = require('./settings');
-
-
-var doFetch = function (state, house) {
-    let TIGER_URL = settings.tigerUrl;
-    let filename = 'tl_2016_' + settings.states[state] + '_' + settings.houses[house].toLowerCase();
-    let url = 'https://www2.census.gov/geo/tiger/TIGER2016/' + settings.houses[house] + '/' + filename + '.zip';
-
-    console.log('Downloading \'' + url + '\' ...');
-
-    https.get(url, (res) => {
-        let filename = 'geo/' + state +'/' + house + '.zip'
-
-        fs.mkdirp('geo/' + state, (err) => {
-            if (err) {
-                console.error('Error: ' + err.message);
-                process.exit(1);
-            }
-
-            res.pipe(fs.createWriteStream(filename));
-
-            res.on('end', () => {
-                console.log('Success!');
-                //console.log('Retrieved ' + state.toUpperCase() + '')
-                process.exit(0);
-            })
-        });
-    }).on('error', (err) => {
-        console.error('Error: ' + err.message);
-        process.exit(1);
-    });
-};
 
 var showList = function () {
     let dir = argv.m || settings.mapDir;
@@ -113,7 +80,5 @@ if (!settings.houses[h]) {
     process.exit();
 }
 
-console.log('Everything looks good: ')
-console.dir(argv._);
-
-doFetch(s, h);
+var fetch = require('./fetch')(argv.m);
+fetch.doFetch(s, h);
