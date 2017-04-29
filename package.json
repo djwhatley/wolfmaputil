@@ -9,9 +9,14 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "danieljwhatley@gmail.com",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:djwhatley/wolfmaputil.git"
+  },
   "license": "ISC",
   "dependencies": {
     "fs-extra": "^3.0.0",
-    "shapefile": "^0.6.2"
-  }
+    "shapefile": "^0.6.2",
+    "yargs": "^7.1.0"
+  },
 }
