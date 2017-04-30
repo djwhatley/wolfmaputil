@@ -55,7 +55,7 @@ var yargs = require('yargs')
     .help('h').alias('h', 'help')
     .boolean('l').alias('l', 'list').describe('l', 'List currently downloaded maps')
     .alias('m', 'mapDir').describe('m', 'Location of map data').default('m', settings.mapDir)
-    //.boolean('v').alias('v', 'verbose').describe('v', 'Show verbose output')
+    //.boolean('v').alias('v', 'verbose').describe('v', 'Show verbose output') 
     .epilog('Valid state/territory codes:\n' + codes) , argv = yargs.argv;    
 
 if (argv.l) {

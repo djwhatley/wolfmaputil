@@ -27,7 +27,7 @@ module.exports = function (mapDir) {
 
                     switch (format) {
                         case 'zip':
-                            res.pipe(fs.createWriteStream(path));
+                            res.pipe(fs.createWriteStream(path)); 
                             break;
                         case 'json':
                         default:
