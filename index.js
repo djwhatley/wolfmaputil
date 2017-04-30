@@ -1,5 +1,6 @@
 var fs = require('fs');
 
+var constants = require('./constants');
 var settings = require('./settings');
 
 var showList = function () {
@@ -39,7 +40,7 @@ var showList = function () {
 };
 
 let codes = '';
-let keys = Object.keys(settings.states).sort((a, b) => a < b ? -1 : (a > b ? 1 : 0));
+let keys = Object.keys(constants.states).sort((a, b) => a < b ? -1 : (a > b ? 1 : 0));
 let c = 0;
 for (let key of keys) {
     codes += key.toUpperCase();
@@ -49,11 +50,12 @@ for (let key of keys) {
 }
 
 var yargs = require('yargs')
-    .usage('Usage: $0 <state> <house> [options]\n\nParameters:\n  state:      ANSI code of state/territory (see below)\n  house:      Which house of the legislature (lower|upper)')
+    .usage('Usage: $0 <state> <house> [options]\n\nParameters:\n  state:      ANSI code of state/territory (see below)\n  house:      Which house of the legislature: (lower|upper)')
+    .alias('f', 'format').describe('f', 'Download format: (json|zip)').default('f', settings.format)
     .help('h').alias('h', 'help')
     .boolean('l').alias('l', 'list').describe('l', 'List currently downloaded maps')
-    .alias('m', 'mapDir').describe('m', 'Location of map data (overrides setting)').default('m', settings.mapDir)
-    .boolean('v').alias('v', 'verbose').describe('v', 'Show verbose output')
+    .alias('m', 'mapDir').describe('m', 'Location of map data').default('m', settings.mapDir)
+    //.boolean('v').alias('v', 'verbose').describe('v', 'Show verbose output')
     .epilog('Valid state/territory codes:\n' + codes) , argv = yargs.argv;    
 
 if (argv.l) {
@@ -70,15 +72,15 @@ if (argv._.length < 2) {
 let s = argv._[0].toLowerCase();
 let h = argv._[1].toLowerCase();
 
-if (!settings.states[s]) {
-    console.error('Error! Invalid state: \'' + argv._[0] + '\'. Use -l option to list valid codes');
+if (!constants.states[s]) {
+    console.error("Error! Invalid state: '" + argv._[0] + "'. Use -l option to list valid code.s");
     process.exit();
 }
 
-if (!settings.houses[h]) {
-    console.error('Error! Invalid house: \'' + argv._[1] + '\'. Valid options are (lower|upper)');
+if (!constants.houses[h]) {
+    console.error("Error! Invalid house: '" + argv._[1] + "'. Valid options are (lower|upper).");
     process.exit();
 }
 
-var fetch = require('./fetch')(argv.m);
-fetch.doFetch(s, h);
+var fetch = require('./fetch')(argv.m || settings.mapDir);
+fetch.doFetch(s, h, argv.f);
